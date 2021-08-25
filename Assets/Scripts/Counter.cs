@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Counter : MonoBehaviour
 {
     public Field.FieldColor fieldColor;
     public int number;
-    public bool isIdle;
     public bool isFinnish;
+
+    public void SetCounterDetails(int number, bool isFinnish)
+    {
+        this.number = number;
+        this.isFinnish = isFinnish;
+    }
+    
     public void SetColorRed()
     {
         gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 48, 77, 255);
@@ -30,5 +37,10 @@ public class Counter : MonoBehaviour
     {
         gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 178, 74, 255);
         fieldColor = Field.FieldColor.Yellow;
+    }
+    private void OnMouseDown()
+    {
+        Debug.Log("Ciparakieta");
+        gameObject.SetActive(false);
     }
 }
