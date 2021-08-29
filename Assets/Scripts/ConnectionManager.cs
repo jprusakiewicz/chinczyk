@@ -9,6 +9,7 @@ using BestHTTP.Extensions;
 using BestHTTP.WebSocket;
 using Newtonsoft.Json;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Item
 {
@@ -38,6 +39,10 @@ public class Item
 
     [JsonProperty("is_game_on")] public bool is_game_on { get; set; }
     public string whos_turn { get; set; }
+    public int dice { get; set; }
+    
+    
+    [JsonProperty("my_color")]public string myColor { get; set; }
     public GameData game_data { get; set; }
     public Dictionary<string, string> nicks { get; set; }
 }
@@ -59,6 +64,9 @@ public class ConnectionManager : MonoBehaviour
     private GameObject[] disableUIs;
     private Nicks nicks;
     private SetCounters setCounters;
+//    private int? drawnNumber = null;
+    private Arrows arrows;
+    private Dice dice;
 
 
     private const float connectTimeout = 3;
@@ -69,13 +77,15 @@ public class ConnectionManager : MonoBehaviour
         config = new Config();
         setCounters = GameObject.Find("Counters").GetComponent<SetCounters>();
         nicks = GameObject.Find("Nicks").GetComponent<Nicks>();
+        arrows = GameObject.Find("Arrows").GetComponent<Arrows>();
+        dice = GameObject.Find("Dice").GetComponent<Dice>();
 
 //        disableUIs = GameObject.FindGameObjectsWithTag("DisableUI");
 //        foreach (GameObject go in disableUIs)
 //        {
 //            go.SetActive(false);
 //        }
-        config = new Config {player_id = "1", room_id = "1", server_address = "ws://localhost:5000/test/"}; // todo
+        config = new Config {player_id = "1", room_id = "1", server_address = "ws://localhost:5000/ws/"}; // todo
     }
 
     private void Update()
@@ -119,21 +129,18 @@ public class ConnectionManager : MonoBehaviour
     {
         Debug.Log(message);
         Item item = JsonConvert.DeserializeObject<Item>(message);
-//        nicks.ActivateNicks(item.nicks); //todo add to pyhon test endpoint
-        if (item.is_game_on)
-        {
-            setCounters.SeTCounters(item.game_data);
-//            arrows.ActivateArrow(item.whos_turn);
-        }
+        ClearDesk();
+        nicks.ActivateNicks(item.nicks);
+        
+        if (!item.is_game_on) return;
+        isMyTurn = item.whos_turn == item.myColor;
+        setCounters.SeTCounters(item.game_data);
+        arrows.ActivateArrow(item.whos_turn);
+        dice.SetDice(item.dice);
     }
 
-    public static void SendUpdateToServer(List<string> pickedField)
+    static void SendUpdateToServer(Dictionary<string, dynamic> dictToSend)
     {
-        var dictToSend = new Dictionary<string, List<string>>
-        {
-            ["picked_field"] = pickedField
-        };
-
         string dictAsStr = JsonConvert.SerializeObject(dictToSend);
         Debug.Log("sending update to server ");
 
@@ -143,5 +150,33 @@ public class ConnectionManager : MonoBehaviour
     public void ConfigFromJson(string json)
     {
         config = JsonUtility.FromJson<Config>(json);
+    }
+
+
+//    public void DrawNumber()
+//    {
+//        if (drawnNumber == null)
+//        {
+//            drawnNumber = Random.Range(1, 7);
+//            Debug.Log(drawnNumber);
+//        }
+//    }
+
+    public void CounterClick(bool isFinnish, bool isIdle, int number = 0)
+    {
+        if (isMyTurn)
+        {
+            var dictToSend = new Dictionary<string, dynamic>
+            {
+                ["isFinnish"] = isFinnish,
+                ["isIdle"] = isIdle,
+                ["number"] = number
+            };
+            SendUpdateToServer(dictToSend);
+        }
+        else
+        {
+            Debug.Log("It's not your turn!");
+        }
     }
 }

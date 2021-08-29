@@ -13,14 +13,13 @@ public class SetCounters : MonoBehaviour
         fields = new List<GameObject>(GameObject.FindGameObjectsWithTag("field"));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public void ResetCounters()
     {
         Debug.Log("ResetCounters!");
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
+        }
     }
 
     public void SeTCounters(Item.GameData gameData)

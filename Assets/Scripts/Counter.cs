@@ -7,14 +7,21 @@ public class Counter : MonoBehaviour
 {
     public Field.FieldColor fieldColor;
     public int number;
-    public bool isFinnish;
+    public bool? isFinnish = null;
+    private ConnectionManager connectionManager;
+
+    private void Start()
+    {
+        connectionManager = GameObject.Find("GameController").GetComponent<ConnectionManager>();
+    }
 
     public void SetCounterDetails(int number, bool isFinnish)
     {
         this.number = number;
         this.isFinnish = isFinnish;
+        
     }
-    
+
     public void SetColorRed()
     {
         gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 48, 77, 255);
@@ -38,9 +45,21 @@ public class Counter : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 178, 74, 255);
         fieldColor = Field.FieldColor.Yellow;
     }
+
     private void OnMouseDown()
     {
-        Debug.Log("Ciparakieta");
-        gameObject.SetActive(false);
+        switch (isFinnish)
+        {
+            case null:
+                connectionManager.CounterClick(false, true, number);
+                break;
+            case true:
+                connectionManager.CounterClick(true, false, number);
+                break;
+            case false:
+                connectionManager.CounterClick(false, false, number);
+                break;
+        }
     }
+
 }
