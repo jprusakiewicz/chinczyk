@@ -85,7 +85,7 @@ public class ConnectionManager : MonoBehaviour
 //        {
 //            go.SetActive(false);
 //        }
-        config = new Config {player_id = "1", room_id = "1", server_address = "ws://localhost:5000/ws/"}; // todo
+        config = new Config {player_id = "2", room_id = "1", server_address = "ws://localhost:5000/ws/"}; // todo
     }
 
     private void Update()
@@ -152,7 +152,13 @@ public class ConnectionManager : MonoBehaviour
         config = JsonUtility.FromJson<Config>(json);
     }
 
+    public void SkipMove()
+    {
+        string stringToSend = "{\"other\": \"skip\"}";
+        Debug.Log("sending update to server: skip");
 
+        webSocket.Send(stringToSend);
+    }
 //    public void DrawNumber()
 //    {
 //        if (drawnNumber == null)
@@ -162,7 +168,7 @@ public class ConnectionManager : MonoBehaviour
 //        }
 //    }
 
-    public void CounterClick(bool isFinnish, bool isIdle, int number = 0)
+    public void CounterClick(bool isFinnish, bool isIdle, Field.FieldColor fieldColor, int number = 0)
     {
         if (isMyTurn)
         {
@@ -170,7 +176,8 @@ public class ConnectionManager : MonoBehaviour
             {
                 ["isFinnish"] = isFinnish,
                 ["isIdle"] = isIdle,
-                ["number"] = number
+                ["number"] = number,
+                ["fieldColor"] = fieldColor.ToString()
             };
             SendUpdateToServer(dictToSend);
         }

@@ -51,13 +51,13 @@ public class Counter : MonoBehaviour
         switch (isFinnish)
         {
             case null:
-                connectionManager.CounterClick(false, true, number);
+                connectionManager.CounterClick(false, true, fieldColor, number);
                 break;
             case true:
-                connectionManager.CounterClick(true, false, number);
+                connectionManager.CounterClick(true, false, fieldColor, number);
                 break;
             case false:
-                connectionManager.CounterClick(false, false, number);
+                connectionManager.CounterClick(false, false, fieldColor, number);
                 break;
         }
     }

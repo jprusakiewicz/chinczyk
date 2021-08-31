@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Makao</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/005.json", {onProgress: UnityProgress});
+
+
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      const playerId = urlParams.get('PLAYER_ID');
+      const roomId = urlParams.get('ROOM_ID')
+
+      var objectFromParams = {player_id: playerId, room_id: roomId, server_address: "ws://0.0.0.0:5000/ws/"};
+      var jsonStringParams = JSON.stringify(objectFromParams);
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">Makao</div>
+      </div>
+    </div>
+    <div style="border:solid 1px black; width:200px; height:30px; margin:auto; text-align:center" onclick="unityInstance.SendMessage('GameController','ConfigFromJson', jsonStringParams)">JSON FROM PATH PARAMS</div>
+  </body>
+</html>

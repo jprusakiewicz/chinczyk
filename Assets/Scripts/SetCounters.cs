@@ -140,7 +140,7 @@ public class SetCounters : MonoBehaviour
 
         if (gameDataFinnish.Yellow != null && gameDataFinnish.Yellow.Count != 0)
         {
-            foreach (var counter in gameDataFinnish.Red)
+            foreach (var counter in gameDataFinnish.Yellow)
             {
                 var field = fields.Find(f =>
                     f.GetComponent<Field>().number == counter &&
