@@ -48,12 +48,13 @@ public class Item
 }
 
 
-public struct Config
+public class Config
 {
     // do not change variables names names
     public string player_id;
     public string room_id;
     public string server_address;
+    public string player_nick;
 }
 
 public class ConnectionManager : MonoBehaviour
@@ -74,7 +75,7 @@ public class ConnectionManager : MonoBehaviour
 
     void Start()
     {
-        config = new Config();
+//        config = new Config();
         setCounters = GameObject.Find("Counters").GetComponent<SetCounters>();
         nicks = GameObject.Find("Nicks").GetComponent<Nicks>();
         arrows = GameObject.Find("Arrows").GetComponent<Arrows>();
@@ -85,7 +86,7 @@ public class ConnectionManager : MonoBehaviour
 //        {
 //            go.SetActive(false);
 //        }
-        config = new Config {player_id = "2", room_id = "1", server_address = "ws://localhost:5000/ws/"}; // todo
+//        config = new Config {player_id = "2", room_id = "1", server_address = "ws://localhost:5000/ws/"}; // todo
     }
 
     private void Update()
@@ -115,7 +116,7 @@ public class ConnectionManager : MonoBehaviour
 
     private WebSocket ConnectToServer(Config config)
     {
-        string fullAddress = Path.Combine(config.server_address + config.room_id + "/" + config.player_id);
+        string fullAddress = Path.Combine(config.server_address + config.room_id + "/" + config.player_id + "/" + config.player_nick);
         Debug.Log("full_path: " + fullAddress);
 
         webSocket = new WebSocket(new Uri(fullAddress));
@@ -149,7 +150,8 @@ public class ConnectionManager : MonoBehaviour
 
     public void ConfigFromJson(string json)
     {
-        config = JsonUtility.FromJson<Config>(json);
+        if (config == null)
+            config = JsonUtility.FromJson<Config>(json);
     }
 
     public void SkipMove()

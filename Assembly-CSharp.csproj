@@ -51,6 +51,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\DisableKeyboardInput.cs" />
     <Compile Include="Assets\Scripts\Arrows.cs" />
     <Compile Include="Assets\Scripts\ConnectionManager.cs" />
     <Compile Include="Assets\Scripts\Counter.cs" />

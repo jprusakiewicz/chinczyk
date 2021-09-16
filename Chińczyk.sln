@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestHTTP", "BestHTTP.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{37030ccf-5183-0689-7350-e465f26c3127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{da8659b0-9f0e-caea-3310-cc43193a0711}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{37030ccf-5183-0689-7350-e465f26c3127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37030ccf-5183-0689-7350-e465f26c3127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37030ccf-5183-0689-7350-e465f26c3127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{da8659b0-9f0e-caea-3310-cc43193a0711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{da8659b0-9f0e-caea-3310-cc43193a0711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{da8659b0-9f0e-caea-3310-cc43193a0711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{da8659b0-9f0e-caea-3310-cc43193a0711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

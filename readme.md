@@ -1,7 +1,9 @@
 #Chińczyk frontend
 
 ###config file
-config file must be send just after game startup
+config file must be send just after game startup  
+
+
 `{
     player_id: str,
     player_nick: str,
