@@ -9,13 +9,12 @@ public class Arrows : MonoBehaviour
     [SerializeField] private GameObject greenArrow;
     [SerializeField] private GameObject yellowArrow;
 
-    // Start is called before the first frame update
     void Start()
     {
         DeactivateArrows();
     }
 
-    public void DeactivateArrows()
+    void DeactivateArrows()
     {
         blueArrow.SetActive(false);
         redArrow.SetActive(false);

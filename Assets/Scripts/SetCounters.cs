@@ -16,7 +16,6 @@ public class SetCounters : MonoBehaviour
 
     public void ResetCounters()
     {
-        Debug.Log("ResetCounters!");
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
@@ -64,7 +63,6 @@ public class SetCounters : MonoBehaviour
             {
                 int fieldNumber = CountFieldNumber(counter, GreenOffset);
 
-//                Debug.Log(fieldNumber);
                 var field = fields.Find(f =>
                     f.GetComponent<Field>().number == fieldNumber &&
                     f.GetComponent<Field>().fieldColor == Field.FieldColor.Regular);
@@ -81,7 +79,6 @@ public class SetCounters : MonoBehaviour
 
             foreach (var counter in gameDataRegular.Yellow)
             {
-//                Debug.Log(counter + YellowOffset);
                 int fieldNumber = CountFieldNumber(counter, YellowOffset);
 
                 var field = fields.Find(f =>
