@@ -33,6 +33,7 @@ public class Item
 
     [JsonProperty("is_game_on")] public bool is_game_on { get; set; }
     public string whos_turn { get; set; }
+    public string turn_id { get; set; }
     public int dice { get; set; }
     
     
@@ -80,11 +81,7 @@ public class ConnectionManager : MonoBehaviour
         dice = GameObject.Find("Dice").GetComponent<Dice>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
 
-//        foreach (GameObject go in disableUIs)
-//        {
-//            go.SetActive(false);
-//        }
-//        config = new Config {player_id = "1", room_id = "1", server_address = "ws://localhost:5000/ws/", player_nick="player"}; // todo
+//        config = new Config {player_id = "1", room_id = "1", server_address = "ws://localhost:5000/test/", player_nick="player"}; // todo
     }
 
     private void Update()
@@ -137,8 +134,18 @@ public class ConnectionManager : MonoBehaviour
         isMyTurn = item.whos_turn == item.myColor;
         setCounters.SeTCounters(item.game_data);
         arrows.ActivateArrow(item.whos_turn);
-        dice.SetDice(item.dice);
         timer.SetTimer(item.timestamp);
+
+        if (isMyTurn)
+        {
+            dice.SetDice(item.dice, item.turn_id);
+        }
+        else
+        {
+            dice.RollTheDice(item.dice, item.turn_id);
+
+        }
+//        Debug.Log(message);
     }
 
     static void SendUpdateToServer(Dictionary<string, dynamic> dictToSend)
